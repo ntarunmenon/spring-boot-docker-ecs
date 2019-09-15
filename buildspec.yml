@@ -4,6 +4,8 @@ env:
     spring-boot-docker-ecs-url: "pring-boot-docker-ecs-url"  
 phases:
   install:
+    runtime-versions:
+      java: openjdk11
     commands:
       - echo install step...
   pre_build:

@@ -28,3 +28,4 @@ _How to keep account number as environment variable which will then be refered i
 
 - Create an SSM parameter store.
 - Refer the parameter store inside 'buildspec.yml'
+- Make sure code build service role can do the operation ssm:GetParamaters. This can be configred from IAM.
