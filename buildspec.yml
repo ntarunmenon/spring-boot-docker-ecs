@@ -1,0 +1,22 @@
+version: 0.2
+env:
+  parameter-store:
+    spring-boot-docker-ecs-url: "pring-boot-docker-ecs-url"  
+phases:
+  install:
+    commands:
+      - echo install step...
+  pre_build:
+    commands:
+      - echo logging in to AWS ECR...
+      - $(aws ecr get-login --no-include-email --region ap-southeast-2)
+  build:
+    commands:
+      - echo build Docker image on `date`
+      - ./mvnw install dockerfile:build
+      - docker tag spring-boot-docker-ecs:latest ${spring-boot-docker-ecs-url}
+  post_build:
+    commands:
+      - echo build Docker image complete `date`
+      - echo push latest Docker images to ECR...
+      - docker push ${spring-boot-docker-ecs-url}
