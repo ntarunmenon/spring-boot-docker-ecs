@@ -14,6 +14,7 @@ phases:
       - $(aws ecr get-login --no-include-email --region ap-southeast-2)
   build:
     commands:
+      - export MAVEN_CONFIG=''
       - echo build Docker image on `date`
       - ./mvnw install dockerfile:build
       - docker tag spring-boot-docker-ecs:latest ${spring-boot-docker-ecs-url}
