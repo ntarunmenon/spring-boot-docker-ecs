@@ -15,7 +15,7 @@ phases:
       - $(aws ecr get-login --no-include-email --region ap-southeast-2)
   build:
     commands:
-      - export MAVEN_CONFIG=''
+      - export MAVEN_CONFIG='/repo/.m2'
       - echo build Docker image on `date`
       - ./mvnw install dockerfile:build
       - docker tag spring-boot-docker-ecs:latest ${spring-boot-docker-ecs-url}
@@ -24,3 +24,6 @@ phases:
       - echo build Docker image complete `date`
       - echo push latest Docker images to ECR...
       - docker push ${spring-boot-docker-ecs-url}
+cache:
+  paths:
+    - '/repo/.m2/**/*'
