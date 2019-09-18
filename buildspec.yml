@@ -8,6 +8,9 @@ phases:
       java: openjdk11
     commands:
       - echo install step...
+      - sudo groupadd docker
+      - sudo usermod -aG docker $USER
+      - sudo snap restart docker
   pre_build:
     commands:
       - echo logging in to AWS ECR...
