@@ -45,6 +45,11 @@ I need to redirect repo to a local folder and then cache that folder.
 
 - ./mvnw is not able to find docker. 
 
+Key gotchas I need to to document.
+
+- Enable source code caching
+- Enable priveleged.  
+
 
 ### Deploy this application to an EC2 instance and test using CURL
 
