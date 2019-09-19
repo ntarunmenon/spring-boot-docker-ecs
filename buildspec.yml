@@ -24,3 +24,6 @@ phases:
       - echo build Docker image complete `date`
       - echo push latest Docker images to ECR...
       - docker push ${spring-boot-docker-ecs-url}
+cache:
+  paths:
+    - '/root/.m2/**/*'
