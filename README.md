@@ -190,6 +190,7 @@ sudo snap install docker
 sudo groupadd docker
 sudo usermod -aG docker $USER
 sudo snap restart docker
+sudo snap install aws-cli --classic
 
 ```
 
@@ -207,7 +208,7 @@ sudo snap restart docker
                 "ecr:BatchGetImage",
                 "ecr:BatchCheckLayerAvailability"
             ],
-            "Resource": "arn:aws:ecr:#your-region-code#":#Your Account No#:repository/springio/spring-boot-docker-ecs"
+            "Resource": "*"
         },
         {
             "Sid": "GrantECRAuthAccess",
@@ -232,11 +233,11 @@ sudo snap restart docker
 ## Get the image id and run it using the following commands
 
 docker ps
-docker run 2ad4ea4d2bdc &
+docker run -p 8080:8080 -t #account_no#.dkr.ecr.#your-region-code#.amazonaws.com/spring-boot-docker-ecs
 
 ```
 
-7. Edit the inbound rule assosciated with your security group to allow requests to 8080.
+7. Edit the inbound rule associated with your security group to allow requests to 8080.
 
 8. Test the command using the following command
 
