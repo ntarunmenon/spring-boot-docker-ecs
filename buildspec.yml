@@ -21,7 +21,8 @@ phases:
   post_build:
     commands:
       - echo Writing image definitions file...
-      - printf '[{"name":"spring-boot-docker-ecs","imageUri":"%s"}]' $spring_boot_docker_ecs_url/spring-boot-docker-ecs:latest > imagedefinitions.json
+      - echo $(printf '[{"name":"spring-boot-ecs","imageUri":"%s"}]' $spring_boot_docker_ecs_url/spring-boot-docker-ecs:latest)
+      - printf '[{"name":"spring-boot-ecs","imageUri":"%s"}]' $spring_boot_docker_ecs_url/spring-boot-docker-ecs:latest > imagedefinitions.json
 artifacts:
   files: imagedefinitions.json
 cache:
