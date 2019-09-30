@@ -18,6 +18,12 @@ phases:
       - export MAVEN_CONFIG=''
       - echo build Docker image on `date`
       - ./mvnw install dockerfile:build dockerfile:push -Ddocker-image-ecr-repo=$spring_boot_docker_ecs_url
+  post_build:
+    commands:
+      - echo Writing image definitions file...
+      - printf '[{"name":"spring-boot-docker-ecs","imageUri":"%s"}]' $spring_boot_docker_ecs_url/spring-boot-docker-ecs:latest > imagedefinitions.json
+artifacts:
+  files: imagedefinitions.json
 cache:
   paths:
     - '/root/.m2/**/*'

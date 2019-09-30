@@ -12,7 +12,7 @@ ECR repo etc. The sequence below elaborates further
 - Create a simple Spring Boot API & Dockerize it. 
 - Use AWS CodeBuild build to push the image to docker in ECR. 
 - Deploy this application to an EC2 instance and test using CURL
-- Create a code pipeline project which will fetch start codebuild and deploy to an already existing EC2 instance.  
+- Deploy the application using ECS and test the application.  
 - Use code pipeline and code deploy to deploy the application to ECS. 
 
 
@@ -244,3 +244,7 @@ docker run -p 8080:8080 -t #account_no#.dkr.ecr.#your-region-code#.amazonaws.com
 ```
 curl ec2-3-104-105-220.#your-region-code#".compute.amazonaws.com:8080
 ```
+
+### Deploy the application using ECS and test the application.
+
+- Use CodeDeploy to deploy the application through ECS. 
