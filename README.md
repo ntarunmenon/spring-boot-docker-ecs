@@ -13,7 +13,7 @@ ECR repo etc. The sequence below elaborates further
 - Use AWS CodeBuild build to push the image to docker in ECR. 
 - Deploy this application to an EC2 instance and test using CURL
 - Deploy the application using ECS and test the application.  
-- Use code pipeline and code deploy to deploy the application to ECS. 
+- Use code pipeline to deploy the application to ECS. 
 
 
 ### Create a simple Spring Boot API & Dockerize it
@@ -247,4 +247,103 @@ curl ec2-3-104-105-220.#your-region-code#".compute.amazonaws.com:8080
 
 ### Deploy the application using ECS and test the application.
 
-- Use CodeDeploy to deploy the application through ECS. 
+1. Create an ECS Cluster as shown below.
+
+![cluster_001](images/ecs/cluster_001.png)
+
+![cluster_002](images/ecs/cluster_002.png)
+
+![cluster_002](images/ecs/cluster_003.png)
+
+
+2. Create an ECS task as shown below.
+
+![task_01](images/ecs/task_01.png)
+
+![task_01](images/ecs/task_02.png)
+
+3. Create an ECS service against the cluster as shown below
+
+![service_001](images/ecs/service_001.png)
+
+![service_002](images/ecs/service_002.png)
+
+![service_003](images/ecs/service_003.png)
+
+![service_004](images/ecs/service_004.png)
+
+![service_005](images/ecs/service_005.png)
+
+![service_006](images/ecs/service_006.png)
+
+![service_007](images/ecs/service_007.png)
+
+4. Verify the deployed application is working
+
+![test_01](images/ecs/test_01.png)
+
+
+
+### Use code pipeline to deploy the application to ECS.
+
+1. Modify the buildspec.yml to add the following line.
+
+```groovy
+  post_build:
+    commands:
+      - echo Writing image definitions file...
+      - echo $(printf '[{"name":"spring-boot-ecs","imageUri":"%s"}]' $spring_boot_docker_ecs_url/spring-boot-docker-ecs:latest)
+      - printf '[{"name":"spring-boot-ecs","imageUri":"%s"}]' $spring_boot_docker_ecs_url/spring-boot-docker-ecs:latest > imagedefinitions.json
+
+```
+
+The final build spec will look as follows. 
+
+```groovy
+version: 0.2
+env:
+  parameter-store:
+    spring_boot_docker_ecs_url: "pring-boot-docker-ecs-url"
+phases:
+  install:
+    runtime-versions:
+      java: openjdk11
+      docker: 18
+    commands:
+      - echo install step...
+  pre_build:
+    commands:
+      - echo logging in to AWS ECR...
+      - $(aws ecr get-login --no-include-email --region ap-southeast-2)
+  build:
+    commands:
+      - export MAVEN_CONFIG=''
+      - echo build Docker image on `date`
+      - ./mvnw install dockerfile:build dockerfile:push -Ddocker-image-ecr-repo=$spring_boot_docker_ecs_url
+  post_build:
+    commands:
+      - echo Writing image definitions file...
+      - echo $(printf '[{"name":"spring-boot-ecs","imageUri":"%s"}]' $spring_boot_docker_ecs_url/spring-boot-docker-ecs:latest)
+      - printf '[{"name":"spring-boot-ecs","imageUri":"%s"}]' $spring_boot_docker_ecs_url/spring-boot-docker-ecs:latest > imagedefinitions.json
+artifacts:
+  files: imagedefinitions.json
+cache:
+  paths:
+    - '/root/.m2/**/*'
+```
+**It is important to not that the `"name":"spring-boot-ecs"` should match exactly the name of the container given in the task definition.** 
+
+2. Create a code pipeline project as follows.
+
+ 
+![codepipeline_001](images/codepipeline/codepipeline_001.png)
+
+![codepipeline_002](images/codepipeline/codepipeline_002.png)
+
+![codepipeline_003](images/codepipeline/codepipeline_003.png)
+
+![codepipeline_004](images/codepipeline/codepipeline_004.png)
+
+3. Confirm that the pipeline is working. 
+
+
