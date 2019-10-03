@@ -28,13 +28,7 @@ Run `http://localhost:8080/` and verify that `Hello Docker World` is being shown
 
 ### Use AWS CodeBuild build to push the image to docker in ECR. 
 
-
-##### The easy way
-
-To be done:- Write cloudformation to create the CodeBuild project
-
-##### The hard way
-
+<details><summary>CLICK ME</summary>
 1. Set up a code build project as per the following screen shots.
 
 ###### Project Configuration
@@ -178,6 +172,8 @@ cache:
 
 - Build cache is not working for some reason. 
 
+</details>
+
 ### Deploy this application to an EC2 instance and test using CURL
 
 1. Create an ubuntu instance in EC2 console.
@@ -266,6 +262,7 @@ curl ec2-3-104-105-220.#your-region-code#".compute.amazonaws.com:8080
 
 ![service_001](images/ecs/service_001.png)
 
+**Minimum healthy percentage should be set to zero in the screen shot below**
 ![service_002](images/ecs/service_002.png)
 
 ![service_003](images/ecs/service_003.png)
