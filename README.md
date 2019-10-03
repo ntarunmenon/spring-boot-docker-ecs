@@ -176,6 +176,7 @@ cache:
 
 ### Deploy this application to an EC2 instance and test using CURL
 
+<details><summary>CLICK ME</summary>
 1. Create an ubuntu instance in EC2 console.
 2. SSH into the instance.
 3. Execute the following set of commands
@@ -240,8 +241,11 @@ docker run -p 8080:8080 -t #account_no#.dkr.ecr.#your-region-code#.amazonaws.com
 ```
 curl ec2-3-104-105-220.#your-region-code#".compute.amazonaws.com:8080
 ```
+</details>
 
 ### Deploy the application using ECS and test the application.
+
+<details><summary>CLICK ME</summary>
 
 1. Create an ECS Cluster as shown below.
 
@@ -279,9 +283,11 @@ curl ec2-3-104-105-220.#your-region-code#".compute.amazonaws.com:8080
 
 ![test_01](images/ecs/test_01.png)
 
-
+</details>
 
 ### Use code pipeline to deploy the application to ECS.
+
+<details><summary>CLICK ME</summary>
 
 1. Modify the buildspec.yml to add the following line.
 
@@ -343,4 +349,5 @@ cache:
 
 3. Confirm that the pipeline is working. 
 
+</details>
 
