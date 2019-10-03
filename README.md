@@ -1,13 +1,13 @@
 # spring-boot-docker-ecs
-spring-boot-docker-ecs
+
 
 ## Objective
 
-The objective is to Create a Spring Boot project which is CICD enabled. Whenever a change is pushed to Github there should be a AWS CodeBuild
-project which will fetch the changes from Codebuild and then deploy the changes to ECS.
+Create a Spring Boot project which is CICD enabled. Whenever a change is pushed to Github there should be a AWS Codepipeline
+project which will fetch the changes from Github and then deploy the changes to ECS.
 
-The text below will show how this can be done organically 1.e start with a simple project running in local, then use code build to push the changes to 
-ECR repo etc. The sequence below elaborates further
+
+We can split up this objective into the following tasks
 
 - Create a simple Spring Boot API & Dockerize it. 
 - Use AWS CodeBuild build to push the image to docker in ECR. 
@@ -15,6 +15,7 @@ ECR repo etc. The sequence below elaborates further
 - Deploy the application using ECS and test the application.  
 - Use code pipeline to deploy the application to ECS. 
 
+Below sections of the documentation shows how each step can be done using AWS console. 
 
 ### Create a simple Spring Boot API & Dockerize it
 
