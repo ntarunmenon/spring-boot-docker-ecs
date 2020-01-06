@@ -1,7 +1,7 @@
 version: 0.2
 env:
   parameter-store:
-    spring_boot_docker_ecs_url: "pring-boot-docker-ecs-url"
+    spring_boot_docker_ecs_url: "spring-boot-docker-ecs-docker-repo"
 phases:
   install:
     runtime-versions:
